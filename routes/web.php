@@ -10,9 +10,7 @@ Route::get('/', function () {
 Route::get('/goto', function () {
     $user = auth()->user();
     $redirects = [
-        'developer' => 'developer.dashboard',
-        'host'  => 'host.dashboard',
-        'user'  => 'settings.profile',
+        'admin' => 'admin.dashboard',
     ];
 
     foreach ($redirects as $role => $route) {
@@ -26,14 +24,10 @@ Route::get('/goto', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::prefix('developer')->name('developer.')->group(function () {
-        Volt::route('dashboard', 'developer.dashboard')->name('dashboard');
-        Volt::route('master-data/users', 'developer.master-data.user')->name('master-data.users');
-        Volt::route('master-data/roles', 'developer.master-data.role')->name('master-data.roles');
-    });
-
-    Route::prefix('host')->name('host.')->group(function () {
-        Volt::route('dashboard', 'host.dashboard')->name('dashboard');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Volt::route('dashboard', 'admin.dashboard')->name('dashboard');
+        Volt::route('controller', 'admin.relay-controller')->name('controller');
+        Volt::route('controller/add', 'admin.add-controller')->name('controller.create');
     });
 
     Route::redirect('settings', 'settings/profile');

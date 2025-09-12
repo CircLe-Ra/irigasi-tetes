@@ -1,8 +1,11 @@
 <?php
 
+use Livewire\Attributes\Title;
 use Livewire\Volt\Component;
 
-new class extends Component {
+new
+#[Title('Tampilan')]
+class extends Component {
     //
 }; ?>
 

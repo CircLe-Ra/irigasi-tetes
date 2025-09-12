@@ -3,23 +3,24 @@
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\{Title, Url, Computed};
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
 new
-#[\Livewire\Attributes\Title('Master Data - Peran')]
+#[Title('Master Data - Peran')]
 class extends Component {
     use WithPagination;
 
-    #[\Livewire\Attributes\Url(history: true, keep: true)]
+    #[Url(history: true, keep: true)]
     public $show = 5;
-    #[\Livewire\Attributes\Url(history: true, keep: true)]
+    #[Url(history: true, keep: true)]
     public string $search = '';
 
     public string $name = '';
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function roles()
     {
         return Role::where('name', 'like', '%' . $this->search . '%')
@@ -44,7 +45,7 @@ class extends Component {
                             {{ $loop->iteration }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $role->name == 'developer' ? 'Developer' : ($role->name == 'host' ? 'Pemilik' : 'Petugas') }}
+                            {{ $role->name }}
                         </td>
                         <td class="px-6 py-4">
                             {{ $role->guard_name }}

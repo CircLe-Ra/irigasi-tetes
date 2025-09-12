@@ -3,18 +3,19 @@
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\{Title, Url, Computed};
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
 new
-#[\Livewire\Attributes\Title('Master Data - Pengguna')]
+#[Title('Master Data - Pengguna')]
 class extends Component {
     use WithPagination;
 
-    #[\Livewire\Attributes\Url(history: true, keep: true)]
+    #[Url(history: true, keep: true)]
     public $show = 5;
-    #[\Livewire\Attributes\Url(history: true, keep: true)]
+    #[Url(history: true, keep: true)]
     public string $search = '';
     public bool $showConfirmModal = false;
 
@@ -25,7 +26,7 @@ class extends Component {
     public string $password_confirmation = '';
     public string $role;
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function users()
     {
         return User::where('name', 'like', '%' . $this->search . '%')
@@ -69,12 +70,12 @@ class extends Component {
                 $user = User::find($this->id);
                 $user->update($data);
                 if ($user->hasRole($user->getRoleNames()->toArray())) {
-                    foreach ($user->getRoleNames() as $roleName){
+                    foreach ($user->getRoleNames() as $roleName) {
                         $user->removeRole($roleName);
                     }
                 }
                 $user->assignRole($this->role);
-            }else{
+            } else {
                 User::create($data)->assignRole($this->role);
             }
 
@@ -178,8 +179,10 @@ class extends Component {
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
-                                <flux:button variant="primary" size="xs" icon="pencil" wire:click="edit({{ $user->id }})"/>
-                                <flux:button class="disabled:cursor-not-allowed" variant="danger" size="xs" icon="trash" disabled="{{ $user->id == 1 }}" wire:click="delete({{ $user->id }})"/>
+                                <flux:button variant="primary" size="xs" icon="pencil"
+                                             wire:click="edit({{ $user->id }})"/>
+                                <flux:button class="disabled:cursor-not-allowed" variant="danger" size="xs" icon="trash"
+                                             disabled="{{ $user->id == 1 }}" wire:click="delete({{ $user->id }})"/>
                             </div>
                         </td>
                     </tr>

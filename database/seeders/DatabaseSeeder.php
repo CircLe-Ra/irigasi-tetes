@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Device;
+use App\Models\RelayChannel;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,27 +17,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        Role::create(['name' => 'developer']);
-        Role::create(['name' => 'host']);
-        Role::create(['name' => 'officer']);
+        Role::create(['name' => 'admin']);
 
         User::factory()->create([
             'name' => 'Admin',
-            'email' => 'developer@devel.com',
+            'email' => 'admin@admin.com',
             'password' => '123'
-        ])->assignRole('developer');
+        ])->assignRole('admin');
 
-        User::factory()->create([
-            'name' => 'Rully Suherlan',
-            'email' => 'rully@host.com',
-            'password' => '123'
-        ])->assignRole('host');
-
-        User::factory()->create([
-            'name' => 'Fikri Suleman',
-            'email' => 'fikri@host.com',
-            'password' => '123'
-        ])->assignRole('host');
-
+        $device = Device::create(['name' => 'NodeMCU-1']);
+        for ($i=1;$i<=4;$i++) {
+            RelayChannel::create([
+                'device_id'=>$device->id,
+                'channel'=>$i,
+                'state'=>0
+            ]);
+        }
     }
 }
