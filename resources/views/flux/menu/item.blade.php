@@ -32,9 +32,13 @@ $classes = Flux::classes()
     ->add('text-start text-sm font-medium')
     ->add('[&[disabled]]:opacity-50')
     ->add(match ($variant) {
+        'warning' => [
+            'text-yellow-800 data-active:text-yellow-600 data-active:bg-yellow-50 dark:text-white dark:data-active:bg-yellow-400/20 dark:data-active:text-yellow-400',
+            '**:data-flux-menu-item-icon:text-yellow-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
+        ],
         'danger' => [
-            'text-zinc-800 data-active:text-red-600 data-active:bg-red-50 dark:text-white dark:data-active:bg-red-400/20 dark:data-active:text-red-400',
-            '**:data-flux-menu-item-icon:text-zinc-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
+            'text-red-800 data-active:text-red-600 data-active:bg-red-50 dark:text-white dark:data-active:bg-red-400/20 dark:data-active:text-red-400',
+            '**:data-flux-menu-item-icon:text-red-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
         ],
         'default' => [
             'text-zinc-800 data-active:bg-zinc-50 dark:text-white dark:data-active:bg-zinc-600',

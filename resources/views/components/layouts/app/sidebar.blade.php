@@ -15,7 +15,7 @@
             <flux:sidebar.collapse />
         </flux:sidebar.header>
         <flux:sidebar.nav>
-            <flux:sidebar.item icon="microchip" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>Sensor Status</flux:sidebar.item>
+            <flux:sidebar.item icon="microchip" :href="route('admin.soil')" :current="request()->routeIs('admin.soil')" wire:navigate>Sensor Status</flux:sidebar.item>
             <flux:sidebar.item icon="cpu" :href="route('admin.controller')" :current="request()->routeIs('admin.controller')" wire:navigate>Pengontrolan</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:sidebar.spacer />
@@ -77,24 +77,28 @@
                 <flux:button icon:trailing="ellipsis-vertical" variant="ghost" inset="right"></flux:button>
                 <flux:menu>
                     <flux:menu.item icon="rotate-cw" :href="route(Route::currentRouteName())" wire:navigate>Refresh</flux:menu.item>
-                    @if(request()->routeIs('admin.controller'))
+                    @if(request()->routeIs('admin.soil'))
                     <flux:menu.separator />
-                    <flux:menu.item icon="plus" :href="route('admin.controller.create')" wire:navigate>Tambah Perangkat</flux:menu.item>
+                    <flux:menu.item icon="plus" :href="route('admin.soil.create')" wire:navigate>Tambah Perangkat</flux:menu.item>
+                    @endif
+                    @if(request()->routeIs('admin.controller'))
+                        <flux:menu.separator />
+                        <flux:menu.item icon="plus" :href="route('admin.controller.create')" wire:navigate>Tambah Perangkat</flux:menu.item>
                     @endif
                 </flux:menu>
             </flux:dropdown>
         </flux:navbar>
         <flux:navbar scrollable @class([
             'flex justify-center gap-4 border-t border-zinc-200 dark:border-zinc-700',
-            'hidden' => !request()->routeIs('admin.dashboard', 'admin.controller'),
+            'hidden' => !request()->routeIs('admin.soil', 'admin.controller'),
         ])>
-            <flux:navbar.item icon="microchip" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>Status Sensor</flux:navbar.item>
+            <flux:navbar.item icon="microchip" :href="route('admin.soil')" :current="request()->routeIs('admin.soil')" wire:navigate>Status Sensor</flux:navbar.item>
             <flux:navbar.item icon="cpu" :href="route('admin.controller')" :current="request()->routeIs('admin.controller')" wire:navigate>Pengontrolan</flux:navbar.item>
         </flux:navbar>
     </flux:header>
 
     {{ $slot }}
-
-        @fluxScripts
+    @fluxScripts
+    <x-toaster />
     </body>
 </html>

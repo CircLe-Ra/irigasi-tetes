@@ -33,9 +33,13 @@ $classes = Flux::classes()
     ->add('rounded-md')
     ->add('text-start text-sm font-medium')
     ->add(match ($variant) {
+        'warning' => [
+            'text-yellow-800 hover:text-yellow-600 hover:bg-yellow-50 dark:text-white dark:hover:bg-yellow-400/20 dark:hover:text-yellow-400',
+            '**:data-navmenu-icon:text-yellow-400 dark:**:data-navmenu-icon:text-white/60 [&:hover_[data-navmenu-icon]]:text-current',
+        ],
         'danger' => [
-            'text-zinc-800 hover:text-red-600 hover:bg-red-50 dark:text-white dark:hover:bg-red-400/20 dark:hover:text-red-400',
-            '**:data-navmenu-icon:text-zinc-400 dark:**:data-navmenu-icon:text-white/60 [&:hover_[data-navmenu-icon]]:text-current',
+            'text-red-800 hover:text-red-600 hover:bg-red-50 dark:text-white dark:hover:bg-red-400/20 dark:hover:text-red-400',
+            '**:data-navmenu-icon:text-red-400 dark:**:data-navmenu-icon:text-white/60 [&:hover_[data-navmenu-icon]]:text-current',
         ],
         'default' => [
             'text-zinc-800 hover:bg-zinc-50 dark:text-white dark:hover:bg-zinc-600',

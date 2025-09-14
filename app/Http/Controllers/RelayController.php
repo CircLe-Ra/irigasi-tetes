@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\Soil;
 use Illuminate\Http\Request;
 
 class RelayController extends Controller
@@ -13,9 +14,39 @@ class RelayController extends Controller
         ]);
     }
 
-    public function set(Device $device, $channel, Request $request) {
+    public function set(Device $device, $channel) {
         $relay = $device->channels()->where('channel', $channel)->firstOrFail();
-        $relay->update(['state' => $request->input('state')]);
+        $relay->update(['state' => !$relay->state]);
         return response()->json(['success' => true]);
+    }
+
+
+    //SOIL
+    public function show($device)
+    {
+        $soil = Soil::where('id', $device)->firstOrFail();
+
+        return response()->json([
+            'threshold' => $soil->threshold,
+            'reset' => $soil->reset,
+            'device_relay_id' => $soil->device_id,
+            'channel' => $soil->channel,
+        ]);
+    }
+
+    public function reset($device_id)
+    {
+        $soil = Soil::where('device_id', $device_id)->firstOrFail();
+        $soil->reset = 0;
+        $soil->save();
+
+        return response()->json(['status' => 'ok']);
+    }
+
+    public function updateSensor($device_id, Request $request)
+    {
+        $soil = Soil::where('device_id', $device_id)->firstOrFail();
+        $soil->update(['soil_value' => $soil->soil_value, 'soil_percent' => $request->soil_percent]);
+        return response()->json(['status' => 'ok']);
     }
 }

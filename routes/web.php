@@ -10,7 +10,7 @@ Route::get('/', function () {
 Route::get('/goto', function () {
     $user = auth()->user();
     $redirects = [
-        'admin' => 'admin.dashboard',
+        'admin' => 'admin.soil',
     ];
 
     foreach ($redirects as $role => $route) {
@@ -25,9 +25,10 @@ Route::get('/goto', function () {
 Route::middleware(['auth'])->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        Volt::route('dashboard', 'admin.dashboard')->name('dashboard');
         Volt::route('controller', 'admin.relay-controller')->name('controller');
         Volt::route('controller/add', 'admin.add-controller')->name('controller.create');
+        Volt::route('soil', 'admin.soil-sensor')->name('soil');
+        Volt::route('soil/add', 'admin.add-soil')->name('soil.create');
     });
 
     Route::redirect('settings', 'settings/profile');

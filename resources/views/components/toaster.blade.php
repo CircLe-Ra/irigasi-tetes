@@ -102,7 +102,7 @@
     x-on:toast.window="addToast($event)"
     x-on:action-toast.window="addToastAction($event)"
     x-on:action-toast-closed.window="removeActionToast"
-    class="fixed bottom-10 left-1/2 transform -translate-x-1/2 space-y-3 w-full max-w-md pointer-events-none"
+    class="fixed bottom-10 left-1/2 transform -translate-x-1/2 space-y-3 w-[calc(100%-20px)] md:w-full md:max-w-md pointer-events-none"
 >
     <!-- Toaster Biasa -->
     <template x-for="toast in toasts" :key="toast.id">
