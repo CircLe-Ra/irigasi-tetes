@@ -8,7 +8,7 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('components.layouts.app')]
-#[Title('Tambah Pengontrol')]
+#[Title('Tambah Sensor')]
 class extends Component {
 
     public $id;
@@ -30,7 +30,7 @@ class extends Component {
     public function store()
     {
         $this->validate([
-            'id' => 'required',
+            'id' => 'required|unique:soils,id',
             'device_id' => 'required',
             'name' => 'required',
             'channel' => 'required',

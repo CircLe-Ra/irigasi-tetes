@@ -20,7 +20,6 @@ class RelayController extends Controller
         return response()->json(['success' => true]);
     }
 
-
     //SOIL
     public function show($device)
     {
@@ -34,18 +33,18 @@ class RelayController extends Controller
         ]);
     }
 
-    public function reset($device_id)
+    public function reset($device)
     {
-        $soil = Soil::where('device_id', $device_id)->firstOrFail();
+        $soil = Soil::where('device_id', $device)->firstOrFail();
         $soil->reset = 0;
         $soil->save();
 
         return response()->json(['status' => 'ok']);
     }
 
-    public function updateSensor($device_id, Request $request)
+    public function updateSensor($device, Request $request)
     {
-        $soil = Soil::where('device_id', $device_id)->firstOrFail();
+        $soil = Soil::where('device_id', $device)->firstOrFail();
         $soil->update(['soil_value' => $soil->soil_value, 'soil_percent' => $request->soil_percent]);
         return response()->json(['status' => 'ok']);
     }

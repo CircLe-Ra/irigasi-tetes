@@ -18,7 +18,7 @@ class extends Component {
     public function store()
     {
         $this->validate([
-            'device_id' => 'required',
+            'device_id' => 'required|unique:devices,id',
             'name' => 'required',
             'channels' => 'required',
             'description' => 'required',
