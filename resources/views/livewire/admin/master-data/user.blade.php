@@ -122,79 +122,74 @@ class extends Component {
 }; ?>
 
 <section class="mt-2">
-    <x-partials.sidebar menu="master-data" active="Master Data / Pengguna / Manajemen Akun">
-        <x-slot name="action">
-            <flux:modal.trigger name="user-modal">
-                <flux:button variant="primary" class="w-[100px]" size="sm" icon="plus">Tambah</flux:button>
-            </flux:modal.trigger>
-        </x-slot>
 
-        <flux:modal name="user-modal" class="md:w-96" @close="resetBagAndField">
-            <div class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Data Pengguna</flux:heading>
-                    <flux:text class="mt-2">Tambah atau Ubah Data Pengguna disini.</flux:text>
-                </div>
-                <form wire:submit="store" class="space-y-4">
-                    <flux:input label="Nama Lengkap" wire:model="name" autocomplete="off"/>
-                    <flux:input label="Email" wire:model="email" type="email" autocomplete="off"/>
-                    <flux:input label="Sandi" wire:model="password" type="password" autocomplete="new-password"/>
-                    <flux:input label="Konfirmasi Sandi" wire:model="password_confirmation" type="password"
-                                autocomplete="new-password"/>
-                    <flux:select wire:model="role" label="Peran Pengguna">
-                        <flux:select.option value="" selected>Pilih?</flux:select.option>
-                        <flux:select.option value="developer">Developer</flux:select.option>
-                        <flux:select.option value="host">Pemilik</flux:select.option>
-                        <flux:select.option value="officer">Petugas</flux:select.option>
-                    </flux:select>
-                    <div class="flex ">
-                        <flux:spacer/>
-                        <flux:button type="submit" variant="primary">Simpan</flux:button>
-                    </div>
-                </form>
+    <flux:modal.trigger name="user-modal">
+        <flux:button variant="primary" class="w-[100px]" size="sm" icon="plus">Tambah</flux:button>
+    </flux:modal.trigger>
+
+    <flux:modal name="user-modal" class="md:w-96" @close="resetBagAndField">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Data Pengguna</flux:heading>
+                <flux:text class="mt-2">Tambah atau Ubah Data Pengguna disini.</flux:text>
             </div>
-        </flux:modal>
-        <x-confirm wire:model.self="showConfirmModal" :trash="false"/>
+            <form wire:submit="store" class="space-y-4">
+                <flux:input label="Nama Lengkap" wire:model="name" autocomplete="off"/>
+                <flux:input label="Email" wire:model="email" type="email" autocomplete="off"/>
+                <flux:input label="Sandi" wire:model="password" type="password" autocomplete="new-password"/>
+                <flux:input label="Konfirmasi Sandi" wire:model="password_confirmation" type="password"
+                            autocomplete="new-password"/>
+                <flux:select wire:model="role" label="Peran Pengguna">
+                    <flux:select.option value="" selected>Pilih?</flux:select.option>
+                    <flux:select.option value="admin">Admin</flux:select.option>
+                </flux:select>
+                <div class="flex ">
+                    <flux:spacer/>
+                    <flux:button type="submit" variant="primary">Simpan</flux:button>
+                </div>
+            </form>
+        </div>
+    </flux:modal>
+    <x-confirm wire:model.self="showConfirmModal" :trash="false"/>
 
-        <x-table thead="#, Nama, Email, Peran Pengguna" searchable label="Data Pengguna"
-                 sub-label="Daftar pengguna yang telah didaftarkan">
-            <x-slot name="filter">
-                <x-filter wire:model.live="show"/>
-                <flux:input wire:model.live="search" size="sm" placeholder="Cari" class="w-full max-w-[220px]"/>
-            </x-slot>
-            @if($this->users->count())
-                @foreach($this->users as $user)
-                    <tr>
-                        <td class="px-6 py-4">
-                            {{ $loop->iteration }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->email }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->getRoleNames()->first() == 'host' ? 'Pemilik' : ($user->getRoleNames()->first() == 'developer' ? 'Developer' : 'Petugas') }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-2">
-                                <flux:button variant="primary" size="xs" icon="pencil"
-                                             wire:click="edit({{ $user->id }})"/>
-                                <flux:button class="disabled:cursor-not-allowed" variant="danger" size="xs" icon="trash"
-                                             disabled="{{ $user->id == 1 }}" wire:click="delete({{ $user->id }})"/>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            @else
+    <x-table thead="#, Nama, Email, Peran Pengguna" searchable label="Data Pengguna"
+             sub-label="Daftar pengguna yang telah didaftarkan">
+        <x-slot name="filter">
+            <x-filter wire:model.live="show"/>
+            <flux:input wire:model.live="search" size="sm" placeholder="Cari" class="w-full max-w-[220px]"/>
+        </x-slot>
+        @if($this->users->count())
+            @foreach($this->users as $user)
                 <tr>
-                    <td colspan="4" class="px-6 py-4 text-center">
-                        Data tidak ditemukan
+                    <td class="px-6 py-4">
+                        {{ $loop->iteration }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->email }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->getRoleNames()->first() == 'host' ? 'Pemilik' : ($user->getRoleNames()->first() == 'developer' ? 'Developer' : 'Petugas') }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-2">
+                            <flux:button variant="primary" size="xs" icon="pencil"
+                                         wire:click="edit({{ $user->id }})"/>
+                            <flux:button class="disabled:cursor-not-allowed" variant="danger" size="xs" icon="trash"
+                                         disabled="{{ $user->id == 1 }}" wire:click="delete({{ $user->id }})"/>
+                        </div>
                     </td>
                 </tr>
-            @endif
-        </x-table>
-        {{ $this->users->links('livewire.pagination') }}
-    </x-partials.sidebar>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="4" class="px-6 py-4 text-center">
+                    Data tidak ditemukan
+                </td>
+            </tr>
+        @endif
+    </x-table>
+    {{ $this->users->links('livewire.pagination') }}
 </section>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('goto');
 })->name('home');
 
 Route::get('/goto', function () {
@@ -14,8 +14,12 @@ Route::get('/goto', function () {
     ];
 
     foreach ($redirects as $role => $route) {
-        if ($user->hasRole($role)) {
-            return redirect()->route($route);
+        if($user){
+            if ($user->hasRole($role)) {
+                return redirect()->route($route);
+            }
+        }else{
+            return redirect()->route('login');
         }
     }
     return redirect()->route('settings.profile');
@@ -29,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
         Volt::route('controller/add', 'admin.add-controller')->name('controller.create');
         Volt::route('soil', 'admin.soil-sensor')->name('soil');
         Volt::route('soil/add', 'admin.add-soil')->name('soil.create');
+
+        Volt::route('master-data/users', 'admin.master-data.user')->name('master-data.user');
     });
 
     Route::redirect('settings', 'settings/profile');

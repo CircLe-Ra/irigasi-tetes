@@ -110,7 +110,7 @@ class extends Component {
 }; ?>
 
 <div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" wire:poll>
         @if (!$this->soils->isEmpty())
             @foreach ($this->soils as $soil)
                 <div class="relative">

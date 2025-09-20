@@ -17,6 +17,7 @@
         <flux:sidebar.nav>
             <flux:sidebar.item icon="microchip" :href="route('admin.soil')" :current="request()->routeIs('admin.soil')" wire:navigate>Sensor Status</flux:sidebar.item>
             <flux:sidebar.item icon="cpu" :href="route('admin.controller')" :current="request()->routeIs('admin.controller')" wire:navigate>Pengontrolan</flux:sidebar.item>
+            <flux:sidebar.item icon="user-group" :href="route('admin.master-data.user')" :current="request()->routeIs('admin.master-data.user')" wire:navigate>Pengguna</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:sidebar.spacer />
         <flux:sidebar.nav>
