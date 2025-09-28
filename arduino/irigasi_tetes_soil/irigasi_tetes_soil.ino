@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-const char* ssid = "Aset Masa Depan";
-const char* password = "12345678";
+const char* ssid = "tselhome_B55C";
+const char* password = "egm35bTtM8A";
 
 // ID unik untuk tiap alat soil sensor
 int deviceSoilId = 1;
@@ -11,7 +11,7 @@ int threshold; // variabel batas
 int deviceRelayId; // ini untuk ukuran nodemcu valve
 int relayChannel; // ini untuk channel mana yang mau dinyalakan
 
-String serverHost = "http://192.168.1.158:8000";
+String serverHost = "http://192.168.8.100";
 
 int soilPin = A0;
 
@@ -45,7 +45,7 @@ void loop() {
 
      sendSoilData(soilValue, moisturePercent);
 
-     if (soilValue < threshold) {
+     if (soilValue > threshold) {
       // Tanah kering → nyalakan relay
       if (lastRelayState != 1) {
         sendRelayCommand(1);

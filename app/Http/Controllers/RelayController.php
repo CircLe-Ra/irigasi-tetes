@@ -45,7 +45,7 @@ class RelayController extends Controller
     public function updateSensor($device, Request $request)
     {
         $soil = Soil::where('device_id', $device)->firstOrFail();
-        $soil->update(['soil_value' => $soil->soil_value, 'soil_percent' => $request->soil_percent]);
+        $soil->update(['soil_value' => $request->soil_value, 'soil_percent' => $request->soil_percent]);
         return response()->json(['status' => 'ok']);
     }
 }
