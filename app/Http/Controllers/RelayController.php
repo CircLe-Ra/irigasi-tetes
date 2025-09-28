@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\RelayChannel;
 use App\Models\Soil;
 use Illuminate\Http\Request;
 
@@ -46,15 +47,15 @@ class RelayController extends Controller
     {
         $soil = Soil::where('device_id', $device->id)->firstOrFail();
         $soil->update(['soil_value' => $request->soil_value, 'soil_percent' => $request->soil_percent]);
-
-        $relay = $device->channels()->where('channel', $request->channel)->firstOrFail();
-        if($request->soil_value > $soil->threshold){
-            if(!$relay->state){
-                $relay->update(['state' => true]);
-            }
-        }else{
-            $relay->update(['state' => false]);
+        if ((int)$request->soil_value < $soil->threshold) {
+            RelayChannel::where('device_id', 1)->where('channel', 1)->update(
+                ['state' => false]
+            );
+        } else {
+            RelayChannel::where('device_id', 1)->where('channel', 1)->update(
+                ['state' => true]
+            );
         }
-        return response()->json(['status' => 'ok']);
+        return response()->json(['status' => $request->soil_value > $soil->threshold]);
     }
 }
