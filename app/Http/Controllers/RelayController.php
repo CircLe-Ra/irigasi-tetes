@@ -43,19 +43,10 @@ class RelayController extends Controller
         return response()->json(['status' => 'ok']);
     }
 
-    public function updateSensor(Device $device, Request $request)
+    public function updateSensor($device, Request $request)
     {
-        $soil = Soil::where('device_id', $device->id)->firstOrFail();
+        $soil = Soil::where('device_id', $device)->firstOrFail();
         $soil->update(['soil_value' => $request->soil_value, 'soil_percent' => $request->soil_percent]);
-        if ((int)$request->soil_value < $soil->threshold) {
-            RelayChannel::where('device_id', 1)->where('channel', 1)->update(
-                ['state' => false]
-            );
-        } else {
-            RelayChannel::where('device_id', 1)->where('channel', 1)->update(
-                ['state' => true]
-            );
-        }
         return response()->json(['status' => $request->soil_value > $soil->threshold]);
     }
 }
