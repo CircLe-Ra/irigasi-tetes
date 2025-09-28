@@ -47,6 +47,6 @@ class RelayController extends Controller
     {
         $soil = Soil::where('device_id', $device)->firstOrFail();
         $soil->update(['soil_value' => $request->soil_value, 'soil_percent' => $request->soil_percent]);
-        return response()->json(['status' => $request->soil_value > $soil->threshold]);
+        return response()->json(['status' => 'ok']);
     }
 }
