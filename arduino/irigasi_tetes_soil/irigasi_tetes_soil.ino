@@ -5,7 +5,7 @@ const char* ssid = "tselhome_B55C";
 const char* password = "egm35bTtM8A";
 
 // ID unik untuk tiap alat soil sensor
-int deviceSoilId = 1;
+int deviceSoilId = 3;
 
 int threshold; // variabel batas
 int deviceRelayId; // ini untuk ukuran nodemcu valve
@@ -126,6 +126,7 @@ void sendSoilData(int soilValue, int moisturePercent) {
   HTTPClient http;
 
   String url = serverHost + "/api/soils/" + String(deviceSoilId) + "/data";
+  Serial.println("URL Send Soil: " + url);
   http.begin(client, url);
   http.addHeader("Content-Type", "application/json");
 

@@ -4,7 +4,7 @@
 const char* ssid = "tselhome_B55C";
 const char* password = "egm35bTtM8A";
 
-String serverName = "http://192.168.8.100/api/relays/1";
+String serverName = "http://192.168.8.100/api/relays/5";
 
 int relayPins[4] = {D1, D2, D5, D6};
 

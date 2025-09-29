@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Device extends Model
 {
-    protected $fillable = ['id','name','description'];
+    protected $guarded = [];
     protected $with = ['channels'];
+
 
     public function channels() {
         return $this->hasMany(RelayChannel::class);
